@@ -9,7 +9,7 @@
                 ignoreClass: 'scroolnav-ignore',
                 itemClass: 'scroolnav-item',
                 autoScroll: true,
-                menuPos: 'top',
+                offset: $(this).height()+$(this).offset().top,
                 menuFixed: true,
                 fixedElement: '',
             }, options );
@@ -18,13 +18,9 @@
             
             var pageOffset = new Array();
             var lastScroll;
-            var menuOffset = 0 ;
             var $fixElem = $(this);
             if(settings.fixedElement != '') {
                 $fixElem = $(this).closest(settings.fixedElement);
-            }
-            if(settings.menuPos == 'top') {
-                menuOffset = $(this).height()+$(this).offset().top;
             }
 
             $(settings.selector).height($(window).height());
@@ -51,7 +47,7 @@
                     });
                     var $elem = $('body').find(settings.selector+id);
                     pageOffset.push({key: id, offset: $elem.offset().top, menuElem: $(value) });
-                    if($(window).scrollTop()+menuOffset >= $elem.offset().top) {
+                    if($(window).scrollTop()+settings.offset >= $elem.offset().top) {
                         if(settings.menuFixed) {
                             $fixElem.css({
                                 'position': 'fixed',
@@ -80,7 +76,7 @@
                     var $active = $('.scrolnav').find('.'+settings.activeClass);
                     var currentPos = $(this).scrollTop();
                     if (currentPos > lastScroll) {
-                        if(menuOffset < currentPos && settings.menuFixed) {
+                        if(settings.offset < currentPos && settings.menuFixed) {
                             $fixElem.css({
                                 'position': 'fixed',
                                 'top': '0',
@@ -99,7 +95,7 @@
                         }
 
                     } else if (currentPos < lastScroll ){
-                        if(menuOffset >= currentPos && settings.menuFixed) {
+                        if(settings.offset >= currentPos && settings.menuFixed) {
                             $fixElem.css({
                                 'position': 'static',
                                 'top': 'auto',
