@@ -52,12 +52,14 @@
                     var $elem = $('body').find(settings.selector+id);
                     pageOffset.push({key: id, offset: $elem.offset().top, menuElem: $(value) });
                     if($(window).scrollTop()+menuOffset >= $elem.offset().top) {
-                        $fixElem.css({
-                            'position': 'fixed',
-                            'top': '0',
-                            'left': '0',
-                            'width': '100%'
-                        });
+                        if(settings.menuFixed) {
+                            $fixElem.css({
+                                'position': 'fixed',
+                                'top': '0',
+                                'left': '0',
+                                'width': '100%'
+                            });
+                        }
                         $('.scrolnav').find('.'+settings.activeClass).removeClass(settings.activeClass);
                         $(value).addClass(settings.activeClass);
                     } 
@@ -78,7 +80,7 @@
                     var $active = $('.scrolnav').find('.'+settings.activeClass);
                     var currentPos = $(this).scrollTop();
                     if (currentPos > lastScroll) {
-                        if(menuOffset < currentPos) {
+                        if(menuOffset < currentPos && settings.menuFixed) {
                             $fixElem.css({
                                 'position': 'fixed',
                                 'top': '0',
@@ -97,7 +99,7 @@
                         }
 
                     } else if (currentPos < lastScroll ){
-                        if(menuOffset >= currentPos) {
+                        if(menuOffset >= currentPos && settings.menuFixed) {
                             $fixElem.css({
                                 'position': 'static',
                                 'top': 'auto',
