@@ -4,11 +4,21 @@ Skrypt wspomagajacy tworzenie stron typy one page, za jego pomocą programista n
 
 Sposób użycia:
 
+
+```
+#!javascript
+
 $(function() {
    $('header').scrolnav();
 });
+```
+
 
 Opcje:
+
+
+```
+#!javascript
 
 scrollSpeed: 2000 //prędkość przewijania strony
 selector: ".scrol-page" //sekcje na stronie, do który ma nawigować, 
@@ -21,8 +31,14 @@ menuFixed: true //czy menu ma być przyklejone do góry przeglądarki
 oneScrean: false //każda sekcja ma ustawioną wysokość okna przeglądarki
 responsiveMenu: true //dodaje przycisk menu na telefonach i tabletach
 hideMenu: true //ukrywa menu na tabletach i telefonach po kliknięciu w element menu
+```
+
 
 Metody:
+
+```
+#!javascript
+
 disable() //wyłącza scrool-nav dla elementu
 enable() //włącza scrool-nav dla elementu
-
+```
