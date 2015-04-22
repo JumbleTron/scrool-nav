@@ -51,10 +51,54 @@
                 text-decoration: none;
                 font-size: 1.2em;
                 text-transform: uppercase;
+                -webkit-transition: color 0.5s;
+                transition: color 0.5s;
             }
             .main-nav li a:hover,
             .main-nav li a.active {
                 color: #d92b00;
+            }
+            .scrool-nav-show {
+                display: none;
+            }
+            @media screen and (max-width: 1000px) {
+                .main-wrapper {
+                    width: 100%;
+                }
+                header {
+                    line-height: normal;
+                    position: relative;
+                }
+                .main-nav {
+                    height: 0;
+                    overflow: hidden;
+                    -webkit-transition: height 0.5s;
+                    transition: height 0.5s;
+                }
+                .main-nav li {
+                    display: block;
+                    margin: 10px 0;
+                }
+                .scrool-nav-show {
+                    display: block;
+                    border-bottom: #222438 solid 5px;
+                    border-top: #222438 solid 5px;
+                    width: 30px;
+                    height: 15px;
+                    position: absolute;
+                    left: 20px;
+                    top: 12px;
+                }
+                .scrool-nav-show:before {
+                    position: absolute;
+                    top: 5px;
+                    left: 0px;
+                    display: block;
+                    height: 5px;
+                    width: 30px;
+                    background: #222438;
+                    content: '';
+                }
             }
         </style>
     </head>
@@ -64,8 +108,9 @@
                 <ul class="main-nav">
                     <li><a href="#home">Home</a></li>
                     <li><a href="#about">About</a></li>
+                    <li><a href="http://google.pl">google</a></li>
                     <li><a href="#portfolio">Portfolio</a></li>
-                    <li><a href="#clients">Clients</a></li>
+                    <li><a href="#ignore-page" class="scroolnav-ignore">Ignore page</a></li>
                     <li><a href="#contacts">Contacts</a></li>
                 </ul>
             </nav>
@@ -85,9 +130,9 @@
                 <h2>Portfolio Page</h2>
             </div> 
         </div>
-        <div class="scrol-page" id="clients" style="background:#DBED00">
+        <div class="scrol-page" id="ignore-page" style="background:#DBED00">
             <div class="main-wrapper">
-                <h2>Clients Page</h2>
+                <h2>Ignore Page</h2>
             </div> 
         </div>
         <div class="scrol-page" id="contacts" style="background:#800080">
@@ -100,8 +145,8 @@
     <script src="js/scrolnav.js" type="text/javascript"></script>
     <script>
         $(function() {
-            $('.main-nav').scrolnav({
-                fixedElement: 'header',
+            $('header').scrolnav({
+                oneScrean: true,
             });
         });
     </script>
