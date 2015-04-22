@@ -11,19 +11,38 @@
                 autoScroll: true,
                 offset: $(this).height()+$(this).offset().top,
                 menuFixed: true,
+                oneScrean: false,
+                responsiveMenu: true,
+                hideMenu: true,
             }, options );
 
             $(this).addClass('scrolnav');
-            
+            if(settings.responsiveMenu) {
+                $(this).append('<a href="#" class="scrool-nav-show"></a>');
+            }
             var pageOffset = new Array();
             var lastScroll;
-
-            $(settings.selector).height($(window).height());
+            var menuHeight = $(this).height();
+            
+            if(settings.oneScrean) {
+                $(settings.selector).height($(window).height());
+            }
+            
+            $('.scrool-nav-show').clicktoggle(
+                function(){
+                    $('.scrolnav').css('height','auto');
+                    $('.scrolnav').find('ul').css('height','auto');
+                },
+                function(){
+                    $('.scrolnav').css('height',menuHeight);
+                    $('.scrolnav').find('ul').css('height','0');
+                }
+            );
             
             $('.scrolnav').find('a').each(function(key,value) {
                 var exclude = false;
                 if(typeof $(value).attr('class') != 'undefined') {
-                    var req = new RegExp('^.*\\s'+settings.ignoreClass+'\\s.*$', "g");
+                    var req = new RegExp('^.*'+settings.ignoreClass+'.*$', "g");
                     exclude = req.test($(value).attr('class'));
                 }
                 var id = $(value).prop("hash");
@@ -31,8 +50,11 @@
                     $(value).addClass(settings.itemClass);
                     $(value).click(function() {
                         if(!disable) {
+                            if(settings.hideMenu && settings.responsiveMenu && $('.scrool-nav-show').is(':visible')) {
+                                $('.scrool-nav-show').trigger("click");
+                            }
                             $('html, body').animate({
-                                scrollTop: $(id).offset().top
+                                scrollTop: $(id).offset().top-settings.offset
                             }, settings.scrollSpeed,function() { 
                                 $('.scrolnav').find('.'+settings.activeClass).removeClass(settings.activeClass);
                                 $(value).addClass(settings.activeClass);
@@ -92,7 +114,7 @@
                     } else if (currentPos < lastScroll ){
                         if(settings.offset >= currentPos && settings.menuFixed) {
                             $('.scrolnav').css({
-                                'position': 'static',
+                                'position': 'relative',
                                 'top': 'auto',
                                 'left': 'auto',
                                 'width': 'auto'
@@ -113,12 +135,15 @@
             });
             
             $(window).resize(function () {
+                if(settings.oneScrean) {
+                    $(settings.selector).height($(window).height());
+                }
                 pageOffset.forEach(function(entry) {
                     var newOffset = $('body').find(settings.selector+entry.key);
                     entry.offset = newOffset.offset().top
                 });
             });
-            
+                        
             return $(this);
         },
         disable : function( ) { disable = true; },
@@ -133,6 +158,21 @@
         } else {
             $.error('Method'+methodOrOptions+'does not exist on jQuery.scrolnav');
         }    
+    };
+    
+    $.fn.clicktoggle = function(a, b) {
+        return this.each(function() {
+            var clicked = false;
+            $(this).click(function(e) {
+                e.preventDefault();
+                if (clicked) {
+                    clicked = false;
+                    return b.apply(this, arguments);
+                }
+                clicked = true;
+                return a.apply(this, arguments);
+            });
+        });
     };
     
     function findMenuElement(array,key,pos) {
@@ -155,8 +195,6 @@
             }
         }
     }
-    
-    $.fn.scrolnav.defaults = { 'selector': '.scrol-page', scrollSpeed: 2000, activeClass: 'active', ignoreClass: 'scroolnav-ignore', itemClass: 'scroolnav-item', autoScroll: true, menuPos: 'top',menuFixed: true };
 })(jQuery);
 
 
