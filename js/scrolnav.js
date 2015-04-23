@@ -53,7 +53,7 @@
                             if(settings.hideMenu && settings.responsiveMenu && $('.scrool-nav-show').is(':visible')) {
                                 $('.scrool-nav-show').trigger("click");
                             }
-                            $('html, body').animate({
+                            $('html, body').stop(true,true).animate({
                                 scrollTop: $(id).offset().top-settings.offset
                             }, settings.scrollSpeed,function() { 
                                 $('.scrolnav').find('.'+settings.activeClass).removeClass(settings.activeClass);
