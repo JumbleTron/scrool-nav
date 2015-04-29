@@ -106,7 +106,7 @@
                             $active.removeClass(settings.activeClass);
                             $('.scrolnav').find('li:last-child').find('a.'+settings.itemClass).addClass(settings.activeClass);
                         }
-                        else if($next.offset < currentPos) {
+                        else if(typeof $next != 'undefined' && $next.offset < currentPos) {
                             $active.removeClass(settings.activeClass);
                             $next.menuElem.addClass(settings.activeClass);
                         }
@@ -125,7 +125,7 @@
                             $active.removeClass(settings.activeClass);
                             $('.scrolnav').find('li:first-child').find('a.'+settings.itemClass).addClass(settings.activeClass);
                         }
-                        else if($prev.offset > currentPos) {
+                        else if(typeof $prev != 'undefined' && $prev.offset > currentPos) {
                             $active.removeClass(settings.activeClass);
                             $prev.menuElem.addClass(settings.activeClass);
                         }
